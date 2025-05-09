@@ -175,4 +175,4 @@ The core algorithm for calculating waiting times works as follows:
 
 ---
 
-© 2023 Clinic Queue System. All rights reserved.
+© 2025 Clinic Queue System. All rights reserved.
