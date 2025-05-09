@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinic Queue System Documentation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 20px;
+            padding-bottom: 40px;
+        }
+        .sidebar {
+            position: sticky;
+            top: 20px;
+            height: calc(100vh - 40px);
+            overflow-y: auto;
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        code {
+            color: #d63384;
+        }
+        .toc-link {
+            text-decoration: none;
+            color: #495057;
+            display: block;
+            padding: 5px 0;
+        }
+        .toc-link:hover {
+            color: #0d6efd;
+        }
+        .toc-link.active {
+            color: #0d6efd;
+            font-weight: bold;
+        }
+        h1, h2, h3, h4 {
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        h1 {
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #dee2e6;
+        }
+        h2 {
+            padding-top: 1rem;
+        }
+        .content {
+            max-width: 800px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <!-- Sidebar with Table of Contents -->
+            <div class="col-md-3 sidebar">
+                <h5>Table of Contents</h5>
+                <nav id="toc" class="nav flex-column">
+                    <a class="toc-link" href="#overview">Overview</a>
+                    <a class="toc-link" href="#installation">Installation</a>
+                    <a class="toc-link" href="#features">Features</a>
+                    <a class="toc-link" href="#technical-implementation">Technical Implementation</a>
+                    <a class="toc-link" href="#usage-guide">Usage Guide</a>
+                    <a class="toc-link" href="#case-studies-explained">Case Studies Explained</a>
+                    <a class="toc-link" href="#algorithm-explanation">Algorithm Explanation</a>
+                </nav>
+                <div class="mt-4">
+                    <a href="index.html" class="btn btn-primary">Back to Application</a>
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-md-9 content">
+                <h1>Clinic Queue System Documentation</h1>
+                
+                <section id="overview">
+                    <h2>Overview</h2>
+                    <p>The Clinic Queue System is an online queuing solution for clinics that only accept walk-in patients. This system allows patients to queue online and receive real-time updates about their waiting time. Unlike appointment systems, patients cannot select preferred time slots but instead secure a spot in the queue with estimated waiting times based on their position and doctor availability.</p>
+                    <p>The system calculates waiting times based on:</p>
+                    <ol>
+                        <li>The average consultation time of doctors</li>
+                        <li>The number of patients ahead in the queue</li>
+                        <li>Whether doctors are currently seeing patients</li>
+                        <li>How long current consultations have been going on</li>
+                    </ol>
+                </section>
+                
+                <section id="installation">
+                    <h2>Installation</h2>
+                    <p>This is a pure JavaScript application with Bootstrap for styling. No build tools or package managers are required.</p>
+                    
+                    <h3>Prerequisites</h3>
+                    <ul>
+                        <li>A modern web browser</li>
+                        <li>Internet connection (for loading Bootstrap CDN)</li>
+                    </ul>
+                    
+                    <h3>Setup</h3>
+                    <ol>
+                        <li>Download all project files</li>
+                        <li>Open <code>index.html</code> in your web browser</li>
+                        <li>No server setup is required as this is a client-side application</li>
+                    </ol>
+                </section>
+                
+                <section id="features">
+                    <h2>Features</h2>
+                    <ul>
+                        <li><strong>Single Doctor Queue Calculation</strong>: Calculate waiting times for clinics with one doctor</li>
+                        <li><strong>Multiple Doctors Queue Calculation</strong>: Calculate waiting times for clinics with multiple doctors</li>
+                        <li><strong>Real-time Updates</strong>: Waiting times are calculated based on current queue status</li>
+                        <li><strong>Dynamic Doctor Management</strong>: Add or remove doctors to test different clinic configurations</li>
+                        <li><strong>Detailed Explanations</strong>: View detailed breakdowns of waiting time calculations</li>
+                        <li><strong>Optimal Patient Distribution</strong>: Algorithm distributes patients optimally among doctors</li>
+                    </ul>
+                </section>
+                
+                <section id="technical-implementation">
+                    <h2>Technical Implementation</h2>
+                    
+                    <h3>Core Classes</h3>
+                    
+                    <h4>Doctor Class</h4>
+                    <pre><code>class Doctor {
+  constructor(id, consultationTime, status = "notSeeing", currentConsultationTime = 0) {
+    this.id = id
+    this.consultationTime = consultationTime // Average consultation time in minutes
+    this.status = status // 'notSeeing' or 'seeing'
+    this.currentConsultationTime = currentConsultationTime // How long the current consultation has been going on
+    this.patientQueue = [] // Queue of patients assigned to this doctor
+  }
+  
+  // Methods for calculating remaining time, processing time, etc.
+}</code></pre>
+                    
+                    <h4>ClinicQueue Class</h4>
+                    <pre><code>class ClinicQueue {
+  constructor() {
+    this.doctors = []
+    this.totalPatients = 0
+  }
+  
+  // Methods for adding doctors, calculating waiting time, distributing patients, etc.
+}</code></pre>
+                    
+                    <h3>Key Algorithms</h3>
+                    <ol>
+                        <li><strong>Waiting Time Calculation</strong>: Determines how long a patient will wait based on their position in the queue and doctor availability</li>
+                        <li><strong>Patient Distribution</strong>: Optimally assigns patients to doctors to minimize waiting times</li>
+                        <li><strong>Remaining Consultation Time</strong>: Calculates how much longer a current consultation will take</li>
+                    </ol>
+                </section>
+                
+                <section id="usage-guide">
+                    <h2>Usage Guide</h2>
+                    
+                    <h3>Case Study 1: Single Doctor</h3>
+                    <ol>
+                        <li>Enter the doctor's average consultation time (default: 3 minutes)</li>
+                        <li>Enter the number of patients ahead (default: 5)</li>
+                        <li>Select the doctor's status (seeing a patient or not)</li>
+                        <li>If the doctor is seeing a patient, enter how long the consultation has been going on</li>
+                        <li>Click "Calculate Waiting Time" to see the results</li>
+                    </ol>
+                    
+                    <h3>Case Study 2: Multiple Doctors</h3>
+                    <ol>
+                        <li>For each doctor, enter their average consultation time</li>
+                        <li>Select each doctor's status</li>
+                        <li>If a doctor is seeing a patient, enter how long the consultation has been going on</li>
+                        <li>Enter the number of patients ahead</li>
+                        <li>Click "Calculate Waiting Time" to see the results</li>
+                        <li>Use "Add Another Doctor" or "Remove Doctor" buttons to adjust the number of doctors</li>
+                    </ol>
+                    
+                    <h3>Bonus Calculator</h3>
+                    <ol>
+                        <li>Add as many doctors as needed using the "Add Another Doctor" button</li>
+                        <li>Configure each doctor's consultation time and status</li>
+                        <li>Enter the number of patients ahead</li>
+                        <li>Click "Calculate Waiting Time" to see detailed results including how patients are distributed</li>
+                    </ol>
+                </section>
+                
+                <section id="case-studies-explained">
+                    <h2>Case Studies Explained</h2>
+                    
+                    <h3>Case Study 1: Single Doctor</h3>
+                    <p><strong>Scenario</strong>: Clinic X has 1 doctor with an average consultation time of 3 minutes per patient. John is the 6th patient in the queue with 5 patients ahead of him.</p>
+                    
+                    <p><strong>Question 1</strong>: When should the countdown in waiting time start for John?</p>
+                    <p><strong>Answer</strong>: The countdown should start the moment John joins the queue. The system calculates and displays the waiting time immediately.</p>
+                    
+                    <p><strong>Question 2</strong>: Waiting time when doctor is already seeing a patient:</p>
+                    <p><strong>Answer (a)</strong>: If the doctor has been with a patient for 2 minutes (out of 3 minutes average):</p>
+                    <ul>
+                        <li>Remaining time for current patient = 1 minute</li>
+                        <li>Time for 4 other patients ahead = 12 minutes</li>
+                        <li>Total waiting time = 13 minutes</li>
+                    </ul>
+                    
+                    <p><strong>Answer (b)</strong>: If the doctor has been with a patient for 5 minutes (exceeding the 3 minutes average):</p>
+                    <ul>
+                        <li>Since the consultation has already exceeded the average time, we assume it will finish soon (1 minute)</li>
+                        <li>Time for 4 other patients ahead = 12 minutes</li>
+                        <li>Total waiting time = 13 minutes</li>
+                    </ul>
+                    
+                    <h3>Case Study 2: Multiple Doctors</h3>
+                    <p><strong>Scenario</strong>: Clinic Y has 2 doctors with average consultation times of 3 minutes (Doctor A) and 4 minutes (Doctor B). John is the 11th patient with 10 patients ahead of him.</p>
+                    
+                    <p><strong>Question 1</strong>: Waiting time with both doctors available:</p>
+                    <p><strong>Answer</strong>: The system optimally distributes patients to minimize waiting time. With 10 patients ahead:</p>
+                    <ul>
+                        <li>Doctor A (faster) will handle 6 patients (18 minutes)</li>
+                        <li>Doctor B will handle 4 patients (16 minutes)</li>
+                        <li>John will be assigned to Doctor B after the 4 patients</li>
+                        <li>Total waiting time = 16 minutes</li>
+                    </ul>
+                    
+                    <p><strong>Question 2</strong>: Waiting time when Doctor B is already seeing a patient:</p>
+                    <p><strong>Answer</strong>: If Doctor B has been with a patient for 2 minutes (out of 4 minutes average):</p>
+                    <ul>
+                        <li>Remaining time for current patient with Doctor B = 2 minutes</li>
+                        <li>Doctor A (available) will handle 6 patients (18 minutes)</li>
+                        <li>Doctor B will handle 3 more patients after current one (12 minutes)</li>
+                        <li>Total for Doctor B = 14 minutes</li>
+                        <li>John will be assigned to Doctor B</li>
+                        <li>Total waiting time = 14 minutes</li>
+                    </ul>
+                </section>
+                
+                <section id="algorithm-explanation">
+                    <h2>Algorithm Explanation</h2>
+                    <p>The core algorithm for calculating waiting times works as follows:</p>
+                    
+                    <h3>1. For a single doctor:</h3>
+                    <ul>
+                        <li>If the doctor is not seeing a patient: <code>waitingTime = patientsAhead * consultationTime</code></li>
+                        <li>If the doctor is seeing a patient: <code>waitingTime = remainingConsultationTime + (patientsAhead - 1) * consultationTime</code></li>
+                    </ul>
+                    
+                    <h3>2. For multiple doctors:</h3>
+                    <ul>
+                        <li>Create a copy of the doctors array with their current status</li>
+                        <li>Simulate assigning each patient ahead in the queue to the doctor with the shortest total processing time</li>
+                        <li>After all patients ahead are assigned, the patient's waiting time is the minimum total time among all doctors</li>
+                    </ul>
+                    
+                    <h3>3. Optimal patient distribution:</h3>
+                    <ul>
+                        <li>Always assign the next patient to the doctor who will finish their current queue first</li>
+                        <li>This greedy approach ensures minimum waiting time for all patients</li>
+                    </ul>
+                </section>
+                <footer class="mt-5 pt-3 border-top text-center text-muted">
+                    <p>© 2025 Simple Clinic Queue System. @haidarrais_</p>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Highlight active section in table of contents
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.toc-link');
+            
+            // Add click event to TOC links
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 20,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // Highlight active section on scroll
+            window.addEventListener('scroll', () => {
+                let current = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (pageYOffset >= sectionTop - 60) {
+                        current = '#' + section.getAttribute('id');
+                    }
+                });
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === current) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
